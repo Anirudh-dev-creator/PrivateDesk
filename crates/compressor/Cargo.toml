@@ -1,0 +1,14 @@
+[package]
+name = "pd_compressor"
+version = "0.1.0"
+edition = "2021"
+description = "PrivateDesk local target-size compression engine (no network access)"
+
+[dependencies]
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "webp", "bmp", "tiff"] }
+serde = { version = "1", features = ["derive"] }
+tempfile = "3"
+
+# Image encoding is very slow in unoptimised builds, so tests run optimised.
+[profile.test]
+opt-level = 3
