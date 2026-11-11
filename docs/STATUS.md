@@ -1,30 +1,30 @@
 # Feature status
 
-Not compiled or run by the author: no Rust toolchain or Windows machine was available.
-The GitHub workflow is the first real build and test.
+Batch 1 (shell + Target Size Compressor) was built and tested on GitHub (green build).
+Batch 2 (everything marked NEW) has **not** been compiled yet: the next GitHub build is its first test.
 
-| Feature | Status |
-|---|---|
-| App shell, sidebar, light/dark/system theme | Written, untested |
-| Target Size Compressor: JPEG, PNG (WebP/BMP/TIFF as input) | Written, tests included |
-| Presets 10 KB – 10 MB, custom size, KB/KiB/MB/MiB, exact byte limit shown | Written |
-| Default 100 KB = 100,000 bytes | Written |
-| Maximum mode and Closest-size mode (JPEG; both never exceed the limit) | Written, tests included |
-| Output verified on disk; failed or cancelled jobs leave no file | Written, tests included |
-| Cancel button | Written, untested in UI |
-| PDF compression | Written; needs Ghostscript installed; tested earlier only as a Ghostscript command line |
-| Minimum-quality slider, resize toggle, keep-transparency toggle | Written |
+| Area | Feature | Status |
+|---|---|---|
+| Shell | Sidebar, light/dark/system theme | Built, confirmed |
+| Compressor | JPEG/PNG output, 100 KB default, presets, KB/KiB/MB/MiB, maximum + closest, cancel, on-disk verification | Built, confirmed |
+| Compressor | PDF (needs Ghostscript installed) | Built |
+| **NEW** Batch Compress | Many files, one limit, output folder, suffix, retry failed, cancel, CSV report | Written, untested |
+| **NEW** Image Studio | Crop, resize, rotate, flip, brightness, contrast, blur, sharpen, grayscale, sepia, JPEG/PNG/WebP(lossless)/BMP/TIFF output, JPEG DPI tag, EXIF viewer, before/after preview | Written, untested |
+| **NEW** Passport Studio | Size presets (editable), exact mm × DPI output, zoom/move, background colour, print sheets (4×6, 5×7, A4, custom), cut guides, JPG/PNG export | Written, untested |
+| **NEW** Utilities | SHA-256/MD5, QR code, Base64, text tools, JSON, duplicate finder (report only), bulk rename (preview + confirm) | Written, untested |
 
-## Not built yet (and not shown as working)
-- WebP **output** (the Rust image library only writes lossless WebP, which is usually larger than JPEG)
-- DOCX / PPTX / XLSX compression
-- Batch compression, before/after preview, DPI controls, real progress percentage
-- Everything else in the master prompt: PDF tools, document editor, converter, image studio,
-  passport photos, OCR, scanner, file manager, Explorer integration, local AI, installer options
-  beyond the default NSIS setup, Hindi/Odia UI, Tailwind styling
+## Next batches (not built)
+- **Batch 3 – PDF Tools:** merge, split, extract/delete/reorder/rotate pages, images to PDF, passport sheet as PDF.
+- **Batch 4 – Windows integration:** right-click "PrivateDesk" menu, Send To, Open With, file associations.
+- **Batch 5 – engines you install separately:** Word/Office conversion (LibreOffice), OCR (Tesseract), PDF to image.
+
+## Not planned in this form / needs separate decisions
+- Automatic face detection and AI background removal (needs an ONNX model file and extra libraries)
+- Full Word-compatible document editor
+- Scanner (WIA/TWAIN), local AI assistant, Hindi/Odia interface, encrypted vault
+- DOCX/PPTX/XLSX size compression, WebP lossy output
 
 ## Known limits
-- Images over 24 megapixels are rejected (memory safety on 4 GB PCs).
-- PDF paths containing non-English characters may fail with Ghostscript on Windows.
-- Closest mode may lower JPEG quality to land near the limit.
-- No Cargo.lock / package-lock.json are included; they are created on the first build.
+- Compressor handles images up to 24 megapixels; Image and Passport tools up to 40 megapixels.
+- Passport tools have no face detection: position the face manually and check official rules.
+- PDF paths with non-English characters may fail with Ghostscript on Windows.

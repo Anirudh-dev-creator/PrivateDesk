@@ -16,6 +16,7 @@ tauri = { version = "2", features = [] }
 tauri-plugin-dialog = "2"
 serde = { version = "1", features = ["derive"] }
 pd_compressor = { path = "../crates/compressor" }
+pd_tools = { path = "../crates/tools" }
 
 [profile.release]
 lto = true

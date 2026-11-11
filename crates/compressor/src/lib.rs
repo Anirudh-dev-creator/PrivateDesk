@@ -275,6 +275,74 @@ pub fn compress(request: CompressionRequest) -> Result<CompressionResult, String
     })
 }
 
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FolderRequest {
+    pub input_path: String,
+    pub output_dir: String,
+    pub suffix: String,
+    pub target_bytes: u64,
+    pub output_format: String,
+    #[serde(default = "default_mode")]
+    pub mode: String,
+    pub allow_resize: bool,
+    pub preserve_transparency: bool,
+    #[serde(default = "default_min_quality")]
+    pub min_quality: u8,
+}
+
+/// Batch helper: chooses a safe, unused output name inside `output_dir`
+/// (`name_compressed.jpg`, then `name_compressed_1.jpg`, ...) and compresses into it.
+pub fn compress_into_folder(req: FolderRequest) -> Result<CompressionResult, String> {
+    let info = inspect_file(&req.input_path)?;
+    let ext = if info.is_pdf {
+        "pdf".to_string()
+    } else if req.output_format.eq_ignore_ascii_case("png") {
+        "png".to_string()
+    } else if req.output_format.eq_ignore_ascii_case("jpeg") {
+        "jpg".to_string()
+    } else if info.size_bytes <= req.target_bytes {
+        info.extension.clone()
+    } else if info.has_alpha.unwrap_or(false) && req.preserve_transparency {
+        "png".to_string()
+    } else {
+        "jpg".to_string()
+    };
+    let out_dir = PathBuf::from(&req.output_dir);
+    if !out_dir.is_dir() {
+        return Err("The output folder does not exist.".into());
+    }
+    let stem = Path::new(&info.name)
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or("file")
+        .to_string();
+    let suffix: String = req
+        .suffix
+        .chars()
+        .filter(|c| !c.is_control() && !"<>:\"/\\|?*".contains(*c))
+        .collect();
+    let mut output = out_dir.join(format!("{stem}{suffix}.{ext}"));
+    let mut n = 1;
+    while output.exists() {
+        if n > 999 {
+            return Err("Too many files with this name already exist in the output folder.".into());
+        }
+        output = out_dir.join(format!("{stem}{suffix}_{n}.{ext}"));
+        n += 1;
+    }
+    compress(CompressionRequest {
+        input_path: req.input_path,
+        output_path: output.to_string_lossy().into_owned(),
+        target_bytes: req.target_bytes,
+        output_format: req.output_format,
+        mode: req.mode,
+        allow_resize: req.allow_resize,
+        preserve_transparency: req.preserve_transparency,
+        min_quality: req.min_quality,
+    })
+}
+
 fn read_image(path: &Path) -> Result<DynamicImage, String> {
     // Check the header first so oversized images are rejected before decoding.
     let (w, h) = image::image_dimensions(path).map_err(|e| format!("Cannot read image dimensions: {e}"))?;

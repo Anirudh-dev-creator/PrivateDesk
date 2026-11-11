@@ -43,3 +43,42 @@ body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--color-bg);colo
 .status-list{display:flex;flex-direction:column;gap:8px;font-size:12px}
 .status-row{display:flex;gap:10px;align-items:center}
 .dot{width:8px;height:8px;border-radius:50%;background:#1da66a}.dot.off{background:#d2a017}
+
+/* ---------- shared page styles ---------- */
+.pd-page{max-width:1100px;margin:0 auto;padding:28px 30px 60px}
+.pd-page h1{font-size:24px;margin:0 0 4px;letter-spacing:-.02em}
+.pd-lead{color:var(--color-muted);margin:0 0 20px;font-size:13px}
+.pd-panel{background:var(--color-panel);border:1px solid var(--color-border);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.pd-panel h2{font-size:14px;margin:0 0 10px}
+.pd-split{display:grid;grid-template-columns:340px 1fr;gap:14px;align-items:start}
+@media(max-width:980px){.pd-split{grid-template-columns:1fr}}
+.pd-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.pd-field{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--color-muted);margin-bottom:10px}
+.pd-field input[type=text],.pd-field input[type=number],.pd-field select,.pd-field textarea,.pd-input{
+  border:1px solid var(--color-border-strong);border-radius:8px;padding:8px 10px;background:var(--color-surface);color:var(--color-text);font:inherit;min-width:0}
+.pd-field textarea,.pd-textarea{width:100%;min-height:150px;resize:vertical;font-family:Consolas,monospace;font-size:12px;border:1px solid var(--color-border-strong);border-radius:8px;padding:10px;background:var(--color-surface);color:var(--color-text)}
+.pd-field input[type=range]{width:100%;accent-color:var(--color-accent)}
+.pd-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pd-btn{border:0;border-radius:9px;background:var(--color-accent);color:#fff;padding:9px 15px;font-weight:700;font-size:12px;cursor:pointer}
+.pd-btn:disabled{opacity:.45;cursor:not-allowed}
+.pd-btn.secondary{background:var(--color-surface);color:var(--color-text);border:1px solid var(--color-border-strong)}
+.pd-btn.small{padding:5px 10px;font-weight:600}
+.pd-chip{border:1px solid var(--color-border-strong);background:var(--color-surface);color:var(--color-text);border-radius:999px;padding:5px 11px;font-size:12px;cursor:pointer}
+.pd-chip.active{background:var(--color-accent-soft);border-color:var(--color-accent);color:var(--color-accent);font-weight:700}
+.pd-drop{border:2px dashed var(--color-border-strong);border-radius:14px;padding:22px;text-align:center;cursor:pointer;background:var(--color-surface-soft);margin-bottom:14px}
+.pd-drop.drag{border-color:var(--color-accent);background:var(--color-accent-soft)}
+.pd-drop small{display:block;color:var(--color-muted);margin-top:4px}
+.pd-error{background:#fdecea;border:1px solid #f0b6ae;color:#8a2417;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:13px}
+.pd-ok{background:#e8f7ef;border:1px solid #a9dcc0;color:#14633c;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:13px}
+.pd-warn{background:#fff8e6;border:1px solid #f0d99a;color:#7a5b10;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:12px}
+.pd-previews{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pd-previews.single{grid-template-columns:1fr}
+.pd-preview{background:repeating-conic-gradient(#8883 0% 25%,transparent 0% 50%) 50%/16px 16px;border:1px solid var(--color-border);border-radius:10px;min-height:160px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pd-preview img{max-width:100%;max-height:420px;display:block}
+.pd-cap{font-size:11px;color:var(--color-muted);margin:6px 0 0}
+.pd-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pd-table{width:100%;border-collapse:collapse;font-size:12px}
+.pd-table th,.pd-table td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--color-border);vertical-align:top;word-break:break-all}
+.pd-mono{font-family:Consolas,monospace;font-size:12px;word-break:break-all}
+.pd-ok-text{color:#14884f;font-weight:700}.pd-bad-text{color:#c0392b;font-weight:700}
+.pd-check{display:flex;gap:8px;align-items:center;font-size:12px;margin-bottom:8px}

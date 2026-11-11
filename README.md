@@ -1,6 +1,6 @@
 # PrivateDesk
 
-Offline Windows app. Phase 1 (app shell) and the **Target Size Compressor** are built.
+Offline Windows app. Built so far: app shell, **Target Size Compressor**, **Batch Compress**, **Image Studio**, **Passport & ID Photos**, **Utilities**. See `docs/STATUS.md`.
 Default target: **100 KB maximum = 100,000 bytes**.
 
 ## Get the .exe from GitHub (no Rust or Node needed on your PC)
@@ -34,10 +34,11 @@ Install Node 20+, Rust (rustup) and the Visual Studio C++ Build Tools, then:
 npm install
 npm run tauri dev
 ```
-Run the engine tests: `cd crates/compressor && cargo test --release`
+Run the engine tests: `cd crates/compressor && cargo test --release` and `cd crates/tools && cargo test --release`
 
 ## Layout
 - `crates/compressor` – compression engine (plain Rust, unit-tested, no network code)
+- `crates/tools` – image editing, passport photos and file utilities (plain Rust, unit-tested)
 - `src-tauri` – Tauri 2 desktop shell and commands
 - `src` – React + TypeScript interface
 - `.github/workflows/build-windows.yml` – cloud build

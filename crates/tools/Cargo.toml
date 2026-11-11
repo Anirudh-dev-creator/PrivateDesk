@@ -1,0 +1,18 @@
+[package]
+name = "pd_tools"
+version = "0.1.0"
+edition = "2021"
+description = "PrivateDesk local image, passport-photo and file utilities (no network access)"
+
+[dependencies]
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "webp", "bmp", "tiff"] }
+serde = { version = "1", features = ["derive"] }
+sha2 = "0.10"
+md-5 = "0.10"
+qrcode = { version = "0.14", default-features = false }
+base64 = "0.22"
+kamadak-exif = "0.5"
+tempfile = "3"
+
+[profile.test]
+opt-level = 3

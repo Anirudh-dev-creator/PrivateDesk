@@ -25,6 +25,14 @@ pub async fn compress_to_target(request: CompressionRequest) -> Result<Compressi
 }
 
 #[tauri::command]
+pub async fn compress_into_folder(request: pd_compressor::FolderRequest) -> Result<CompressionResult, String> {
+    pd_compressor::reset_cancel();
+    tauri::async_runtime::spawn_blocking(move || pd_compressor::compress_into_folder(request))
+        .await
+        .map_err(|e| format!("Compression task failed: {e}"))?
+}
+
+#[tauri::command]
 pub fn cancel_compression() {
     pd_compressor::request_cancel();
 }
