@@ -26,9 +26,14 @@ jobs:
           workspaces: |
             src-tauri
             crates/compressor
+            crates/tools
 
       - name: Test compression engine
         working-directory: crates/compressor
+        run: cargo test --release
+
+      - name: Test image, passport and utility tools
+        working-directory: crates/tools
         run: cargo test --release
 
       - name: Install frontend packages
